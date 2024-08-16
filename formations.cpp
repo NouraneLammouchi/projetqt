@@ -1,6 +1,6 @@
 #include "formations.h"
 
-formations::formations()
+FORMATIONS::FORMATIONS()
 {
 
 }

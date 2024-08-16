@@ -22,7 +22,7 @@ class FORMATEURS
         FORMATEURS(int,QString,QString,QString,QString,QString);
 
 //getters
-        int getID_formateur();
+        int getid_formateur();
         QString getnom();
         QString getprenom();
         QString getemail();
@@ -30,7 +30,7 @@ class FORMATEURS
         QString getntel();
 
 
-        void setID_formateur(int);
+        void setid_formateur(int);
         void setnom(QString);
         void setprenom(QString );
         void setemail(QString);
