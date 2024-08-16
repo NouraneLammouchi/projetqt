@@ -75,14 +75,16 @@ void setntel(QString );
       return model;
   }
 
-  bool FORMATEURS::supprimer(QString id_formateur)
+  bool FORMATEURS::supprimer(int id_formateur)
   {
-      QSqlQuery query;
-           QString res=id_formateur;
-           query.prepare("Delete from FORMATEURS where id_formateur=:id_formateur");
-           query.bindValue(":id_formateur",res);
-           return query.exec();
-  }
+        QSqlQuery query;
+         QString idString=QString::number(id_formateur);
+         query.prepare("delete from FORMATEURS where id_formateur=:id_formateur");
+                       //bindValue id =>idstring
+         query.bindValue(":id_formateur",idString);
+                  return query.exec();
+   }
+
 
   bool FORMATEURS::modifier(QString id_formateur)
   {
@@ -102,4 +104,40 @@ void setntel(QString );
 
           return    query.exec();
   }
+
+
+  QSqlQueryModel* FORMATEURS::selectformateurById(int id_formateur)
+   {
+       QSqlQueryModel* model = new QSqlQueryModel();
+       QSqlQuery query;
+       query.prepare("SELECT * FROM FORMATEURS WHERE id_formateur = :id_formateur");
+       query.bindValue(":id_formateur", id_formateur);
+       if(query.exec())
+       {
+           model->setQuery(query);
+           if(model->rowCount() == 1) // Check if exactly one row is returned
+           {
+               model->setQuery("select * from FORMATEURS");
+               model->setHeaderData(0,Qt::Horizontal,QObject::tr("id_formateur"));
+               model->setHeaderData(1,Qt::Horizontal,QObject::tr("nom"));
+               model->setHeaderData(2,Qt::Horizontal,QObject::tr("prenom"));
+               model->setHeaderData(3,Qt::Horizontal,QObject::tr("email"));
+               model->setHeaderData(4,Qt::Horizontal,QObject::tr("specialite"));
+               model->setHeaderData(5,Qt::Horizontal,QObject::tr("ntel"));
+               return model;
+           }
+           else
+           {
+               qDebug() << "Error: No row or more than one row returned for id:" << id_formateur;
+               delete model;
+               return nullptr;
+           }
+       }
+       else
+       {
+           qDebug() << "Query execution failed.";
+           delete model;
+           return nullptr;
+       }
+   }
 

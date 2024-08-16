@@ -19,6 +19,8 @@ public:
 private slots:
     void on_pushButton_ajouter_clicked();
 
+    void on_pushButton_supprimer_clicked();
+
 private:
     Ui::MainWindow *ui;
     FORMATEURS F;

@@ -40,13 +40,14 @@ class FORMATEURS
 
         bool ajouter();
         QSqlQueryModel * afficher();
-        bool supprimer(QString);
+        bool supprimer(int);
         bool modifier(QString);
         bool checkIfIdExists(QString);
 
 
         QSqlQueryModel *rechercher(QString);
         QSqlQueryModel *trier(QString);
+        QSqlQueryModel* selectformateurById(int id);
 
 private:
     int id_formateur;

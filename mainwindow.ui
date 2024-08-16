@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1392</width>
-    <height>762</height>
+    <width>1508</width>
+    <height>753</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>50</y>
+      <x>260</x>
+      <y>80</y>
       <width>1151</width>
       <height>601</height>
      </rect>
@@ -191,6 +191,19 @@
        </rect>
       </property>
      </widget>
+     <widget class="QPushButton" name="pushButton_supprimer">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>380</y>
+        <width>93</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>supprimer</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
@@ -204,7 +217,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1392</width>
+     <width>1508</width>
      <height>26</height>
     </rect>
    </property>

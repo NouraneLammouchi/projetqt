@@ -51,3 +51,36 @@ void MainWindow::on_pushButton_ajouter_clicked()
 
 
 }
+
+void MainWindow::on_pushButton_supprimer_clicked()
+{
+    QModelIndexList selectedRows = ui->tableView_formateurs->selectionModel()->selectedRows();
+        if (selectedRows.isEmpty()) {
+            QMessageBox::warning(this, tr("Aucune ligne sélectionnée"),
+                                 tr("Veuillez sélectionner une ligne à supprimer."),
+                                 QMessageBox::Ok);
+            return;
+        }
+
+
+        int id_formateur = selectedRows.at(0).data().toInt();
+       FORMATEURS F;
+
+       bool test=F.supprimer(id_formateur);
+       if(test)
+      {
+          ui->tableView_formateurs->setModel(F.selectformateurById(id_formateur));//refresh
+         QMessageBox::information(nullptr, QObject::tr("ok"),
+         QObject::tr("suppression effectué.\n"
+                     "Click Cancel to exit."), QMessageBox::Cancel);
+    ui->tableView_formateurs->setModel(F.selectformateurById(id_formateur));//refresh
+      }
+       else
+         QMessageBox::critical(nullptr, QObject::tr("not ok"),
+         QObject::tr("suppression non effectué.\n"
+                     "Click Cancel to exit."), QMessageBox::Cancel);
+
+
+}
+
+
