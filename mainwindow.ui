@@ -17,8 +17,8 @@
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>260</x>
-      <y>80</y>
+      <x>230</x>
+      <y>50</y>
       <width>1151</width>
       <height>601</height>
      </rect>
@@ -26,7 +26,7 @@
     <property name="currentIndex">
      <number>0</number>
     </property>
-    <widget class="QWidget" name="tab_afficher">
+    <widget class="QWidget" name="tab_1">
      <attribute name="title">
       <string>GESTION FORMATEURS</string>
      </attribute>
@@ -40,7 +40,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>ID FORMATEURS</string>
+       <string>ID FORMATEUR</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_nom">
@@ -148,16 +148,6 @@
        </rect>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_specialite">
-      <property name="geometry">
-       <rect>
-        <x>370</x>
-        <y>220</y>
-        <width>113</width>
-        <height>22</height>
-       </rect>
-      </property>
-     </widget>
      <widget class="QLineEdit" name="lineEdit_ntel">
       <property name="geometry">
        <rect>
@@ -204,11 +194,281 @@
        <string>supprimer</string>
       </property>
      </widget>
+     <widget class="QComboBox" name="comboBox_specialite">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>220</y>
+        <width>111</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Intelligence artificielle</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Développement web</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>mobileCybersécurité</string>
+       </property>
+      </item>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
-      <string>Tab 2</string>
+      <string>GESTION FORMATIONS</string>
      </attribute>
+     <widget class="QPushButton" name="pushButton_ajouter_2">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>370</y>
+        <width>93</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>ajouter</string>
+      </property>
+     </widget>
+     <widget class="QTableView" name="tableView_formations">
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>30</y>
+        <width>561</width>
+        <height>521</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_nbrplace">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>260</y>
+        <width>113</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_titre">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>140</y>
+        <width>113</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_supprimer_2">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>470</y>
+        <width>93</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>supprimer</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_datefin">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>196</y>
+        <width>56</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>DATE FIN</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_id_formation">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>100</y>
+        <width>121</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>ID FORMATION</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_titre">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>140</y>
+        <width>56</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>TITRE</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_duree">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>230</y>
+        <width>81</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>DUREE</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_duree">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>230</y>
+        <width>113</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_datedebut">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>170</y>
+        <width>91</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>DATE DEBUT</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_nbrplace">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>260</y>
+        <width>141</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>NOMBRE DE PLACES</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_id_formation">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>110</y>
+        <width>113</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_id_formateur">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>320</y>
+        <width>113</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_typeformation">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>290</y>
+        <width>151</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>TYPE DE FORMATION</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_id_formateur">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>320</y>
+        <width>101</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>ID FORMATEUR</string>
+      </property>
+     </widget>
+     <widget class="QDateEdit" name="dateEdit_debut">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>170</y>
+        <width>110</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QDateEdit" name="dateEdit_fin">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>200</y>
+        <width>110</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="comboBox_type">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>290</y>
+        <width>111</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>mobile</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>full stack</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>marketing</string>
+       </property>
+      </item>
+     </widget>
     </widget>
    </widget>
   </widget>

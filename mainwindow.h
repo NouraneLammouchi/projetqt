@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 #include "formateurs.h"
+#include "formations.h"
 
 #include <QMainWindow>
 
@@ -21,9 +22,14 @@ private slots:
 
     void on_pushButton_supprimer_clicked();
 
+    void on_pushButton_ajouter_2_clicked();
+
+    void on_pushButton_supprimer_2_clicked();
+
 private:
     Ui::MainWindow *ui;
     FORMATEURS F;
+    FORMATIONS F1;
 };
 
 #endif // MAINWINDOW_H

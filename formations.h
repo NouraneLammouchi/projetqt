@@ -22,45 +22,46 @@ class FORMATIONS
         FORMATIONS(int,QString,QDate,QDate,QString,int,QString,int);
 
 //getters
-        int getID_formation();
+        int getid_formation();
         QString gettitre();
         QDate getdatedebut();
         QDate getdatefin();
         QString getduree();
         int getnbrplace();
         QString gettypeformation();
-        int getID_formateur();
+        int getid_formateur();
 
 
-        void setID_formation(int);
+        void setid_formation(int);
         void settitre(QString);
         void setdatedebut(QDate);
         void setdatefin(QDate);
         void setduree(QString );
         void setnbrplace(int);
         void settypeformation(QString );
-        void setID_formateur(int);
+        void setid_formateur(int);
 
 
         bool ajouter();
         QSqlQueryModel * afficher();
-        bool supprimer(QString);
+        bool supprimer(int);
         bool modifier(QString);
         bool checkIfIdExists(QString);
 
 
         QSqlQueryModel *rechercher(QString);
         QSqlQueryModel *trier(QString);
+        QSqlQueryModel* selectformationById(int id_formation);
 
 private:
-        int ID_formation;
+        int id_formation;
         QString titre;
         QDate datedebut;
         QDate datefin;
         QString duree;
         int nbrplace;
         QString typeformation;
-        int ID_formateur;
+        int id_formateur;
 
 
 
