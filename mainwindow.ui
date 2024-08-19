@@ -224,6 +224,19 @@
        </property>
       </item>
      </widget>
+     <widget class="QPushButton" name="pushButton_modifier">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>450</y>
+        <width>93</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>modifier</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
@@ -276,7 +289,7 @@
       <property name="geometry">
        <rect>
         <x>210</x>
-        <y>470</y>
+        <y>440</y>
         <width>93</width>
         <height>28</height>
        </rect>
@@ -468,6 +481,19 @@
         <string>marketing</string>
        </property>
       </item>
+     </widget>
+     <widget class="QPushButton" name="pushButton_modifier_2">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>510</y>
+        <width>93</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>modifier</string>
+      </property>
      </widget>
     </widget>
    </widget>

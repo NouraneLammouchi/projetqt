@@ -86,11 +86,9 @@ void setntel(QString );
    }
 
 
-  bool FORMATEURS::modifier(QString id_formateur)
+  bool FORMATEURS::modifier(int id_formateur)
   {
   QSqlQuery query;
-          QString res= id_formateur;
-
 
           query.prepare("UPDATE FORMATEURS SET nom=:nom,prenom=:prenom,email=:email,specialite=:specialite,ntel=:ntel where id_formateur=:id_formateur");
           query.bindValue(":id_formateur",id_formateur);
@@ -138,6 +136,21 @@ void setntel(QString );
            qDebug() << "Query execution failed.";
            delete model;
            return nullptr;
+       }
+   }
+
+  bool FORMATEURS::checkIfIdExists(QString)
+  {
+       QSqlQuery query;
+       query.prepare("SELECT ID FROM FORMATEURS WHERE ID = :id_formateur");
+       query.bindValue(":id_formateur", id_formateur);
+
+       if (query.exec() && query.next()) {
+
+           return true;
+       } else {
+
+           return false;
        }
    }
 

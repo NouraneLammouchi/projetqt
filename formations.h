@@ -45,7 +45,7 @@ class FORMATIONS
         bool ajouter();
         QSqlQueryModel * afficher();
         bool supprimer(int);
-        bool modifier(QString);
+        bool modifier(int);
         bool checkIfIdExists(QString);
 
 

@@ -26,6 +26,14 @@ private slots:
 
     void on_pushButton_supprimer_2_clicked();
 
+    void on_tableView_formateurs_clicked(const QModelIndex &index);
+
+    void on_tableView_formations_clicked(const QModelIndex &index);
+
+    void on_pushButton_modifier_2_clicked();
+
+    void on_pushButton_modifier_clicked();
+
 private:
     Ui::MainWindow *ui;
     FORMATEURS F;

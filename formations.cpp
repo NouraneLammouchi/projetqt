@@ -91,11 +91,9 @@ FORMATIONS::FORMATIONS(int id_formation,QString titre,QDate datedebut,QDate date
    }
 
 
-  bool FORMATIONS::modifier(QString id_formation)
+  bool FORMATIONS::modifier(int id_formation)
   {
   QSqlQuery query;
-          QString res= id_formation;
-
 
           query.prepare("UPDATE FORMATIONS SET titre=:titre,datedebut=:datedebut,datefin=:datefin,duree=:duree,nbrplace=:nbrplace,typeformation=:typeformation,id_formateur=:id_formateur where id_formation=:id_formation");
           query.bindValue(":id_formation",id_formation);
@@ -148,4 +146,19 @@ FORMATIONS::FORMATIONS(int id_formation,QString titre,QDate datedebut,QDate date
       delete model;
       return nullptr;
   }
+
+  bool FORMATIONS::checkIfIdExists(QString)
+  {
+       QSqlQuery query;
+       query.prepare("SELECT ID FROM FORMATIONS WHERE ID = :id_formation");
+       query.bindValue(":id_formation", id_formation);
+
+       if (query.exec() && query.next()) {
+
+           return true;
+       } else {
+
+           return false;
+       }
+   }
 
