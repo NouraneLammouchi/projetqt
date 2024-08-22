@@ -34,6 +34,10 @@ private slots:
 
     void on_pushButton_modifier_clicked();
 
+    void on_statistique_clicked();
+
+    void on_statistique_2_clicked();
+
 private:
     Ui::MainWindow *ui;
     FORMATEURS F;

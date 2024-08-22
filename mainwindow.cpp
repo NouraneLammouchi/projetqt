@@ -1,6 +1,38 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QMessageBox>
+#include <QCameraViewfinder>
+#include<QCameraImageCapture>
+#include<QVBoxLayout>
+#include<QMenu>
+#include<QAction>
+#include<QFileDialog>
+#include "qmessagebox.h"
+#include "connection.h"
+#include <QIntValidator>
+#include <QTableView>
+#include <QMessageBox>
+#include <QPixmap>
+#include<QPrinter>
+#include<QPainter>
+#include<QPrintDialog>
+#include <QPrintPreviewDialog>
+#include <QPdfWriter>
+#include <QtCharts>
+#include <QDesktopServices>
+#include <QtCharts/QAreaSeries>
+#include <QtCharts/QChartView>
+#include <QtCharts/QLineSeries>
+#include <QPieSlice>
+#include <QPieSeries>
+#include <QChartView>
+
+#include <QPrintDialog>
+#include <QFileDialog>
+#include <QPieSlice>
+#include <QPieSeries>
+#include <QChartView>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -74,12 +106,14 @@ void MainWindow::on_pushButton_supprimer_clicked()
          QMessageBox::information(nullptr, QObject::tr("ok"),
          QObject::tr("suppression effectué.\n"
                      "Click Cancel to exit."), QMessageBox::Cancel);
-    ui->tableView_formateurs->setModel(F.selectformateurById(id_formateur));//refresh
+         ui->tableView_formateurs->setModel(F.afficher());//refresh
+
       }
        else
          QMessageBox::critical(nullptr, QObject::tr("not ok"),
          QObject::tr("suppression non effectué.\n"
                      "Click Cancel to exit."), QMessageBox::Cancel);
+
 
 
 }
@@ -141,11 +175,10 @@ void MainWindow::on_pushButton_supprimer_2_clicked()
        bool test=F1.supprimer(id_formation);
        if(test)
       {
-          ui->tableView_formations->setModel(F1.selectformationById(id_formation));//refresh
          QMessageBox::information(nullptr, QObject::tr("ok"),
          QObject::tr("suppression effectué.\n"
                      "Click Cancel to exit."), QMessageBox::Cancel);
-    ui->tableView_formations->setModel(F1.selectformationById(id_formation));//refresh
+         ui->tableView_formations->setModel(F1.afficher());//refresh
       }
        else
          QMessageBox::critical(nullptr, QObject::tr("not ok"),
@@ -261,5 +294,112 @@ void MainWindow::on_pushButton_modifier_2_clicked()
      ui->comboBox_type->setCurrentIndex(0);
      ui->lineEdit_id_formateur->clear();
 
+    }
 }
+
+void MainWindow::on_statistique_clicked()
+{
+    QSqlQueryModel * model = new QSqlQueryModel();
+    model->setQuery("SELECT * FROM FORMATEURS WHERE specialite='Intelligence artificielle'");
+    float dispo1 = model->rowCount();
+
+    model->setQuery("SELECT * FROM FORMATEURS WHERE specialite='Developpement web'");
+    float dispo = model->rowCount();
+
+    model->setQuery("SELECT * FROM FORMATEURS WHERE specialite='mobile'");
+    float dispo2 = model->rowCount();
+
+    float total = dispo1 + dispo + dispo2;
+    QString a = QString("Intelligence artificielle  " + QString::number((dispo1 * 100) / total, 'f', 2) + "%");
+    QString b = QString("Developpement web" + QString::number((dispo * 100) / total, 'f', 2) + "%");
+    QString c = QString("mobile" + QString::number((dispo2 * 100) / total, 'f', 2) + "%");
+
+    QPieSeries *series = new QPieSeries();
+    series->append(a, dispo1);
+    series->append(b, dispo);
+    series->append(c, dispo2);
+
+    if (dispo1 != 0)
+    {
+        QPieSlice *slice = series->slices().at(0);
+        slice->setLabelVisible();
+        slice->setPen(QPen());
+    }
+
+    if (dispo != 0)
+    {
+        QPieSlice *slice1 = series->slices().at(1);
+        slice1->setLabelVisible();
+    }
+    if (dispo2 != 0)
+    {
+        QPieSlice *slice = series->slices().at(0);
+        slice->setLabelVisible();
+        slice->setPen(QPen());
+    }
+
+
+
+    QChart *chart = new QChart();
+    chart->addSeries(series);
+    chart->setTitle("SPECIALITE : nombre de formateurs " + QString::number(total));
+
+    QChartView *chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+    chartView->resize(1000, 500);
+    chartView->show();
 }
+
+void MainWindow::on_statistique_2_clicked()
+{
+    QSqlQueryModel * model = new QSqlQueryModel();
+    model->setQuery("SELECT * FROM FORMATIONS WHERE typeformation='mobile'");
+    float dispo1 = model->rowCount();
+
+    model->setQuery("SELECT * FROM FORMATIONS WHERE typeformation='full stack'");
+    float dispo = model->rowCount();
+
+    model->setQuery("SELECT * FROM FORMATIONS WHERE typeformation='marketing'");
+    float dispo2 = model->rowCount();
+
+    float total = dispo1 + dispo + dispo2;
+    QString a = QString("mobile " + QString::number((dispo1 * 100) / total, 'f', 2) + "%");
+    QString b = QString("full stack" + QString::number((dispo * 100) / total, 'f', 2) + "%");
+    QString c = QString("marketing" + QString::number((dispo2 * 100) / total, 'f', 2) + "%");
+
+    QPieSeries *series = new QPieSeries();
+    series->append(a, dispo1);
+    series->append(b, dispo);
+    series->append(c, dispo2);
+
+    if (dispo1 != 0)
+    {
+        QPieSlice *slice = series->slices().at(0);
+        slice->setLabelVisible();
+        slice->setPen(QPen());
+    }
+
+    if (dispo != 0)
+    {
+        QPieSlice *slice1 = series->slices().at(1);
+        slice1->setLabelVisible();
+    }
+    if (dispo2 != 0)
+    {
+        QPieSlice *slice = series->slices().at(0);
+        slice->setLabelVisible();
+        slice->setPen(QPen());
+    }
+
+
+
+    QChart *chart = new QChart();
+    chart->addSeries(series);
+    chart->setTitle("TYPE DE FORMATIONS : nombre de formations " + QString::number(total));
+
+    QChartView *chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+    chartView->resize(1000, 500);
+    chartView->show();
+}
+

@@ -49,6 +49,7 @@ class FORMATEURS
         QSqlQueryModel *trier(QString);
         QSqlQueryModel* selectformateurById(int id);
 
+
 private:
     int id_formateur;
     QString nom;

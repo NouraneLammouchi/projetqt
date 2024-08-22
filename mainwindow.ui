@@ -17,8 +17,8 @@
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>50</y>
+      <x>240</x>
+      <y>10</y>
       <width>1151</width>
       <height>601</height>
      </rect>
@@ -215,12 +215,12 @@
       </item>
       <item>
        <property name="text">
-        <string>Développement web</string>
+        <string>Developpement web</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>mobileCybersécurité</string>
+        <string>mobile</string>
        </property>
       </item>
      </widget>
@@ -235,6 +235,19 @@
       </property>
       <property name="text">
        <string>modifier</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="statistique">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>320</y>
+        <width>93</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>statistique</string>
       </property>
      </widget>
     </widget>
@@ -493,6 +506,19 @@
       </property>
       <property name="text">
        <string>modifier</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="statistique_2">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>370</y>
+        <width>93</width>
+        <height>28</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>statistique</string>
       </property>
      </widget>
     </widget>
