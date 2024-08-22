@@ -50,6 +50,15 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_ajouter_clicked()
 {
+    // Réinitialisez les étiquettes d'erreur à vide
+        ui->label_id->setText("");
+        ui->label_nom->setText("");
+        ui->label_prenom->setText("");
+        ui->label_email->setText("");
+        ui->label_specialite->setText("");
+        ui->label_ntel->setText("");
+
+
     int id_formateur=ui->lineEdit_id->text().toInt();
     QString nom=ui->lineEdit_nom->text();
     QString prenom=ui->lineEdit_prenom->text();
@@ -57,32 +66,85 @@ void MainWindow::on_pushButton_ajouter_clicked()
     QString specialite = ui->comboBox_specialite->currentText();
     QString ntel = ui->lineEdit_ntel->text();
 
-    FORMATEURS F(id_formateur,nom,prenom,email,specialite,ntel);
-    bool test=F.ajouter();
-    if(test)
-   {
-        ui->tableView_formateurs->setModel(F.afficher());
+    // Validez les champs d'entrée
+        bool isValid = true;
+        QString id_formateurString = QString::number(id_formateur);
+        if (id_formateurString.isEmpty())
+        {
+            ui->label_id->setText("<font color='red'>ID formateur ne peut pas être vide!!!!</font>");
+            isValid = false;
+        }
 
-      QMessageBox::information(nullptr, QObject::tr("ok"),
-      QObject::tr("ajout effectué.\n"
-                   "Click Cancel to exit."), QMessageBox::Cancel);
+        if (nom.isEmpty()) {
+            ui->label_nom->setText("<font color='red'>nom ne peut pas être vide!!!</font>");
+            isValid = false;
+        }
 
-     ui->lineEdit_id->clear();
-     ui->lineEdit_nom->clear();
-     ui->lineEdit_prenom->clear();
-     ui->lineEdit_email->clear();
-     ui->comboBox_specialite->setCurrentIndex(0);
-     ui->lineEdit_ntel->clear();
-   }
+        if (prenom.isEmpty()) {
+            ui->label_prenom->setText("<font color='red'>prenom ne peut pas être vide!!!</font>");
+            isValid = false;
+        }
+        if (email.isEmpty()) {
+            ui->label_email->setText("<font color='red'>email ne peut pas être vide!!!</font>");
+            isValid = false;
+        }
+        if (specialite.isEmpty()) {
+            ui->label_specialite->setText("<font color='red'>specialite ne peut pas être vide!!!</font>");
+            isValid = false;
+        }
+        if (ntel.isEmpty()) {
+            ui->label_ntel->setText("<font color='red'>num tel ne peut pas être vide!!!</font>");
+            isValid = false;
+        }
+
+        // Ajouter une vérification de l'existence de l'ID dans la base de données
+        QSqlQuery checkQuery;
+        checkQuery.prepare("SELECT id_formateur FROM FORMATEURS WHERE id_formateur = :id_formateur");
+        checkQuery.bindValue(":id_formateur", id_formateur);
+        if (checkQuery.exec() && checkQuery.next()) {
+            ui->label_id->setText("<font color='red'>ID formateur existe déjà!!!!</font>");
+            isValid = false;
+        }
+
+        // Continuez avec les autres validations d'entrée...
+
+        if (isValid)
+        {
+
+            FORMATEURS F(id_formateur,nom,prenom,email,specialite,ntel);
+            bool test=F.ajouter();
+            if(test)
+           {
+                ui->tableView_formateurs->setModel(F.afficher());
+
+              QMessageBox::information(nullptr, QObject::tr("ok"),
+              QObject::tr("ajout effectué.\n"
+                           "Click Cancel to exit."), QMessageBox::Cancel);
+
+             ui->lineEdit_id->clear();
+             ui->lineEdit_nom->clear();
+             ui->lineEdit_prenom->clear();
+             ui->lineEdit_email->clear();
+             ui->comboBox_specialite->setCurrentIndex(0);
+             ui->lineEdit_ntel->clear();
+
+             ui->label_id->clear();
+             ui->label_nom->clear();
+             ui->label_prenom->clear();
+             ui->label_email->clear();
+             ui->label_specialite->clear();
+             ui->label_ntel->clear();
+           }
 
 
-    else
+            else
 
-     QMessageBox::critical(nullptr, QObject::tr("not ok"),
-     QObject::tr("ajout non effectué.\n"
-                 "Click Cancel to exit."), QMessageBox::Cancel);
+             QMessageBox::critical(nullptr, QObject::tr("not ok"),
+             QObject::tr("ajout non effectué.\n"
+                         "Click Cancel to exit."), QMessageBox::Cancel);
 
 
+           }
 }
 
 void MainWindow::on_pushButton_supprimer_clicked()
@@ -117,46 +179,102 @@ void MainWindow::on_pushButton_supprimer_clicked()
 
 
 }
-
 void MainWindow::on_pushButton_ajouter_2_clicked()
 {
-    int id_formation=ui->lineEdit_id_formation->text().toInt();
-    QString titre=ui->lineEdit_titre->text();
+    // Réinitialisez les étiquettes d'erreur à vide
+    ui->label_id_formateur->setText("");
+    ui->label_titre->setText("");
+    ui->label_datedebut->setText("");
+    ui->label_datefin->setText("");
+    ui->label_duree->setText("");
+    ui->label_nbrplace->setText("");
+    ui->label_type->setText("");
+    ui->label_id_formation->setText("");
+
+    bool isValid = true;
+
+    // Validez les champs d'entrée avant de convertir en int
+    QString id_formationStr = ui->lineEdit_id_formation->text();
+    QString titre = ui->lineEdit_titre->text();
+    QString duree = ui->lineEdit_duree->text();
+    QString nbrplaceStr = ui->lineEdit_nbrplace->text();
+    QString typeformation = ui->comboBox_type->currentText();
+    QString id_formateurStr = ui->lineEdit_id_formateur->text();
+
+    if (id_formationStr.isEmpty()) {
+        ui->label_id_formation->setText("<font color='red'>ID formation ne peut pas être vide!!!!</font>");
+        isValid = false;
+    }
+    if (titre.isEmpty()) {
+        ui->label_titre->setText("<font color='red'>Titre ne peut pas être vide!!!</font>");
+        isValid = false;
+    }
+    if (duree.isEmpty()) {
+        ui->label_duree->setText("<font color='red'>Durée ne peut pas être vide!!!</font>");
+        isValid = false;
+    }
+    if (nbrplaceStr.isEmpty()) {
+        ui->label_nbrplace->setText("<font color='red'>Nombre de places ne peut pas être vide!!!</font>");
+        isValid = false;
+    }
+    if (typeformation.isEmpty()) {
+        ui->label_type->setText("<font color='red'>Type ne peut pas être vide!!!</font>");
+        isValid = false;
+    }
+    if (id_formateurStr.isEmpty()) {
+        ui->label_id_formateur->setText("<font color='red'>ID formateur ne peut pas être vide!!!</font>");
+        isValid = false;
+    }
+
+    // Convertissez les valeurs après la validation
+    int id_formation = id_formationStr.toInt();
+    int nbrplace = nbrplaceStr.toInt();
+    int id_formateur = id_formateurStr.toInt();
     QDate datedebut = ui->dateEdit_debut->date();
     QDate datefin = ui->dateEdit_fin->date();
-    QString duree = ui->lineEdit_duree->text();
-    int nbrplace = ui->lineEdit_nbrplace->text().toInt();
-    QString typeformation = ui->comboBox_type->currentText();
-    int id_formateur = ui->lineEdit_id_formateur->text().toInt();
 
-    FORMATIONS F1(id_formation, titre, datedebut, datefin, duree, nbrplace, typeformation, id_formateur);
-    bool test=F1.ajouter();
-    if(test)
-   {
-        ui->tableView_formations->setModel(F1.afficher());
+    // Ajouter une vérification de l'existence de l'ID dans la base de données
+    QSqlQuery checkQuery;
+    checkQuery.prepare("SELECT id_formation FROM FORMATIONS WHERE id_formation = :id_formation");
+    checkQuery.bindValue(":id_formation", id_formation);
+    if (checkQuery.exec() && checkQuery.next()) {
+        ui->label_id_formation->setText("<font color='red'>ID formation existe déjà!!!!</font>");
+        isValid = false;
+    }
 
-      QMessageBox::information(nullptr, QObject::tr("ok"),
-      QObject::tr("ajout effectué.\n"
-                   "Click Cancel to exit."), QMessageBox::Cancel);
+    // Continuez avec l'ajout si toutes les validations sont correctes
+    if (isValid) {
+        FORMATIONS F1(id_formation, titre, datedebut, datefin, duree, nbrplace, typeformation, id_formateur);
+        bool test = F1.ajouter();
+        if (test) {
+            ui->tableView_formations->setModel(F1.afficher());
 
-     ui->lineEdit_id_formation->clear();
-     ui->lineEdit_titre->clear();
-     ui->lineEdit_duree->clear();
-     ui->lineEdit_nbrplace->clear();
-     ui->comboBox_type->setCurrentIndex(0);
-     ui->lineEdit_id_formateur->clear();
+            QMessageBox::information(nullptr, QObject::tr("ok"),
+                                     QObject::tr("Ajout effectué.\n"
+                                                 "Click Cancel to exit."), QMessageBox::Cancel);
 
-   }
+            ui->lineEdit_id_formation->clear();
+            ui->lineEdit_titre->clear();
+            ui->lineEdit_duree->clear();
+            ui->lineEdit_nbrplace->clear();
+            ui->comboBox_type->setCurrentIndex(0);
+            ui->lineEdit_id_formateur->clear();
 
-
-    else
-
-     QMessageBox::critical(nullptr, QObject::tr("not ok"),
-     QObject::tr("ajout non effectué.\n"
-                 "Click Cancel to exit."), QMessageBox::Cancel);
-
-
+            ui->label_id_formation->clear();
+            ui->label_titre->clear();
+            ui->label_duree->clear();
+            ui->label_nbrplace->clear();
+            ui->label_type->clear();
+            ui->label_id_formateur->clear();
+        } else {
+            QMessageBox::critical(nullptr, QObject::tr("not ok"),
+                                  QObject::tr("Ajout non effectué.\n"
+                                              "Click Cancel to exit."), QMessageBox::Cancel);
+        }
+    }
 }
+
+
 
 void MainWindow::on_pushButton_supprimer_2_clicked()
 {
@@ -402,4 +520,5 @@ void MainWindow::on_statistique_2_clicked()
     chartView->resize(1000, 500);
     chartView->show();
 }
+
 
