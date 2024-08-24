@@ -38,6 +38,14 @@ private slots:
 
     void on_statistique_2_clicked();
 
+    void on_pushButton_recherche_clicked();
+
+    void on_pushButton_recherche_2_clicked();
+
+    void on_pushButton_refresh_clicked();
+
+    void on_pushButton_refresh_2_clicked();
+
 private:
     Ui::MainWindow *ui;
     FORMATEURS F;

@@ -522,3 +522,82 @@ void MainWindow::on_statistique_2_clicked()
 }
 
 
+
+void MainWindow::on_pushButton_recherche_clicked()
+{
+    FORMATEURS F;
+
+        int index = ui->comboBox_recherche->currentIndex();
+        QString wh;
+        QSqlQueryModel* model = new QSqlQueryModel();
+        QString k = ui->lineEdit_recherche->text().trimmed(); // Trimmed to remove leading and trailing whitespace
+
+        if (k.isEmpty()) {
+            QMessageBox::critical(nullptr, QObject::tr("Erreur"), QObject::tr("champs vide"), QMessageBox::Cancel);
+            return;
+        }
+
+        if (index == 0) {
+            if (!F.idDisponible(k.toInt())) {
+                QMessageBox::critical(nullptr, QObject::tr("Erreur"), QObject::tr("ID n'existe pas"), QMessageBox::Cancel);
+                return;
+            }
+            wh = "id_formateur=" + k;
+        } else if (index == 1) {
+            wh = "nom='" + k + "'";
+        } else if (index == 2) {
+            wh = "specialite='" + k + "'";
+        }
+        if (F.rech(wh)) {
+            QMessageBox::information(nullptr, QObject::tr("succes"), QObject::tr("Reherche validee"), QMessageBox::Cancel);
+            model->setQuery("SELECT * FROM FORMATEURS WHERE " + wh);
+            ui->tableView_formateurs->setModel(model);
+        } else {
+            QMessageBox::critical(nullptr, QObject::tr("Erreur"), QObject::tr("Recherche non validee"), QMessageBox::Cancel);
+        }
+
+}
+
+void MainWindow::on_pushButton_recherche_2_clicked()
+{
+    FORMATIONS F1;
+
+        int index = ui->comboBox_recherche_2->currentIndex();
+        QString wh;
+        QSqlQueryModel* model = new QSqlQueryModel();
+        QString k = ui->lineEdit_recherche_2->text().trimmed(); // Trimmed to remove leading and trailing whitespace
+
+        if (k.isEmpty()) {
+            QMessageBox::critical(nullptr, QObject::tr("Erreur"), QObject::tr("champs vide"), QMessageBox::Cancel);
+            return;
+        }
+
+        if (index == 0) {
+            if (!F1.idDisponible(k.toInt())) {
+                QMessageBox::critical(nullptr, QObject::tr("Erreur"), QObject::tr("ID n'existe pas"), QMessageBox::Cancel);
+                return;
+            }
+            wh = "id_formation=" + k;
+        } else if (index == 1) {
+            wh = "typeformation='" + k + "'";
+        } else if (index == 2) {
+            wh = "id_formateur='" + k + "'";
+        }
+        if (F1.rech(wh)) {
+            QMessageBox::information(nullptr, QObject::tr("succes"), QObject::tr("Reherche validee"), QMessageBox::Cancel);
+            model->setQuery("SELECT * FROM FORMATIONS WHERE " + wh);
+            ui->tableView_formations->setModel(model);
+        } else {
+            QMessageBox::critical(nullptr, QObject::tr("Erreur"), QObject::tr("Recherche non validee"), QMessageBox::Cancel);
+        }
+}
+
+void MainWindow::on_pushButton_refresh_clicked()
+{
+    ui->tableView_formateurs->setModel(F.afficher());//refresh
+}
+
+void MainWindow::on_pushButton_refresh_2_clicked()
+{
+    ui->tableView_formations->setModel(F1.afficher());//refresh
+}

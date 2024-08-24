@@ -147,10 +147,10 @@ FORMATIONS::FORMATIONS(int id_formation,QString titre,QDate datedebut,QDate date
       return nullptr;
   }
 
-  bool FORMATIONS::checkIfIdExists(QString)
+  bool FORMATIONS::checkIfIdExists(int)
   {
        QSqlQuery query;
-       query.prepare("SELECT ID FROM FORMATIONS WHERE ID = :id_formation");
+       query.prepare("SELECT id_formation FROM FORMATIONS WHERE id_formation = :id_formation");
        query.bindValue(":id_formation", id_formation);
 
        if (query.exec() && query.next()) {
@@ -161,4 +161,32 @@ FORMATIONS::FORMATIONS(int id_formation,QString titre,QDate datedebut,QDate date
            return false;
        }
    }
+
+  bool FORMATIONS::rech(QString rch) {
+      QSqlQuery query;
+      query.prepare("SELECT * FROM FORMATIONS WHERE " + rch);
+      return query.exec();
+  }
+
+  bool FORMATIONS::tri(QString tr){
+
+      QSqlQuery query;
+          query.prepare("SELECT * FROM FORMATIONS "+tr);
+          return query.exec() ;
+
+  }
+  bool FORMATIONS::idDisponible(int id_formation) {
+       QSqlQuery query;
+       query.prepare("SELECT id_formation FROM FORMATIONS WHERE id_formation = :id_formation");
+       query.bindValue(":id_formation", id_formation);
+
+       if (query.exec() && query.next()) {
+
+           return true;
+       } else {
+
+           return false;
+       }
+   }
+
 

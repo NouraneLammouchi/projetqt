@@ -46,7 +46,10 @@ class FORMATIONS
         QSqlQueryModel * afficher();
         bool supprimer(int);
         bool modifier(int);
-        bool checkIfIdExists(QString);
+        bool checkIfIdExists(int);
+        bool rech(QString rch);
+        bool tri(QString tr);
+        bool idDisponible(int );
 
 
         QSqlQueryModel *rechercher(QString);

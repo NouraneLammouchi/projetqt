@@ -139,10 +139,10 @@ void setntel(QString );
        }
    }
 
-  bool FORMATEURS::checkIfIdExists(QString)
+  bool FORMATEURS::checkIfIdExists(int)
   {
        QSqlQuery query;
-       query.prepare("SELECT ID FROM FORMATEURS WHERE ID = :id_formateur");
+       query.prepare("SELECT id_formateur FROM FORMATEURS WHERE id_formateur = :id_formateur");
        query.bindValue(":id_formateur", id_formateur);
 
        if (query.exec() && query.next()) {
@@ -153,5 +153,34 @@ void setntel(QString );
            return false;
        }
    }
+
+  bool FORMATEURS::rech(QString rch) {
+      QSqlQuery query;
+      query.prepare("SELECT * FROM FORMATEURS WHERE " + rch);
+      return query.exec();
+  }
+
+  bool FORMATEURS::tri(QString tr){
+
+      QSqlQuery query;
+          query.prepare("SELECT * FROM FORMATEURS "+tr);
+          return query.exec() ;
+
+  }
+
+  bool FORMATEURS::idDisponible(int id_formateur) {
+       QSqlQuery query;
+       query.prepare("SELECT id_formateur FROM FORMATEURS WHERE id_formateur = :id_formateur");
+       query.bindValue(":id_formateur", id_formateur);
+
+       if (query.exec() && query.next()) {
+
+           return true;
+       } else {
+
+           return false;
+       }
+   }
+
 
 
