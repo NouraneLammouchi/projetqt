@@ -601,3 +601,45 @@ void MainWindow::on_pushButton_refresh_2_clicked()
 {
     ui->tableView_formations->setModel(F1.afficher());//refresh
 }
+
+void MainWindow::on_pushButton_tri_clicked()
+{
+    int index=ui->comboBox_tri->currentIndex();
+           QString orderByClause;
+           QSqlQueryModel* model=new QSqlQueryModel();
+           if (index == 0) {
+                       orderByClause = " ORDER BY id_formateur DESC";
+                   } else if (index == 1) {
+                       orderByClause = " ORDER BY  nom";
+                   }
+
+           if (F.tri(orderByClause)) {
+               QMessageBox::information(nullptr,QObject::tr("ok"),QObject::tr("Tri effectue \n""Click cancel to exit ."),QMessageBox::Cancel);
+                model->setQuery("SELECT *  FROM FORMATEURS"+orderByClause);
+               ui->tableView_formateurs->setModel(model);
+           } else {
+              QMessageBox::critical(nullptr,QObject::tr(" not ok"),QObject::tr("tri non effectue \n""Click cancel to exit ."),QMessageBox::Cancel);
+           }
+}
+
+void MainWindow::on_pushButton_tri_2_clicked()
+{
+    int index=ui->comboBox_tri_2->currentIndex();
+           QString orderByClause;
+           QSqlQueryModel* model=new QSqlQueryModel();
+           if (index == 0) {
+                       orderByClause = " ORDER BY id_formation DESC";
+                   } else if (index == 1) {
+                       orderByClause = " ORDER BY nbrplace ASC";
+                   } else if (index == 2) {
+                       orderByClause = " ORDER BY id_formateur ASC";
+                   }
+
+           if (F1.tri(orderByClause)) {
+               QMessageBox::information(nullptr,QObject::tr("ok"),QObject::tr("Tri effectue \n""Click cancel to exit ."),QMessageBox::Cancel);
+                model->setQuery("SELECT *  FROM FORMATIONS"+orderByClause);
+               ui->tableView_formations->setModel(model);
+           } else {
+              QMessageBox::critical(nullptr,QObject::tr(" not ok"),QObject::tr("tri non effectue \n""Click cancel to exit ."),QMessageBox::Cancel);
+           }
+}

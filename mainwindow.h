@@ -46,6 +46,10 @@ private slots:
 
     void on_pushButton_refresh_2_clicked();
 
+    void on_pushButton_tri_clicked();
+
+    void on_pushButton_tri_2_clicked();
+
 private:
     Ui::MainWindow *ui;
     FORMATEURS F;
