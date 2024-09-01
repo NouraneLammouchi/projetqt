@@ -33,6 +33,10 @@
 #include <QPieSeries>
 #include <QChartView>
 
+#include "QrCode.hpp"
+
+using namespace qrcodegen;
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -134,7 +138,9 @@ void MainWindow::on_pushButton_ajouter_clicked()
              ui->label_email->clear();
              ui->label_specialite->clear();
              ui->label_ntel->clear();
+             on_pushButton_success_clicked();
            }
+
 
 
             else
@@ -169,6 +175,7 @@ void MainWindow::on_pushButton_supprimer_clicked()
          QObject::tr("suppression effectué.\n"
                      "Click Cancel to exit."), QMessageBox::Cancel);
          ui->tableView_formateurs->setModel(F.afficher());//refresh
+         on_pushButtonSupprimer_success_clicked();
 
       }
        else
@@ -266,6 +273,7 @@ void MainWindow::on_pushButton_ajouter_2_clicked()
             ui->label_nbrplace->clear();
             ui->label_type->clear();
             ui->label_id_formateur->clear();
+
         } else {
             QMessageBox::critical(nullptr, QObject::tr("not ok"),
                                   QObject::tr("Ajout non effectué.\n"
@@ -380,6 +388,7 @@ void MainWindow::on_pushButton_modifier_clicked()
      ui->lineEdit_email->clear();
      ui->comboBox_specialite->setCurrentIndex(0);
      ui->lineEdit_ntel->clear();
+     on_pushButtonModifier_success_clicked();
     }
 
  }
@@ -643,3 +652,164 @@ void MainWindow::on_pushButton_tri_2_clicked()
               QMessageBox::critical(nullptr,QObject::tr(" not ok"),QObject::tr("tri non effectue \n""Click cancel to exit ."),QMessageBox::Cancel);
            }
 }
+
+void MainWindow::on_pushButton_pdf_clicked()
+{
+    QPdfWriter pdf("C:/Users/NOURANE/Downloads/Atelier_Connexion/liste-formateurs.pdf");
+
+            QPainter painter(&pdf);
+                   int i = 4000;
+                   painter.setPen(Qt::black);
+                   painter.setFont(QFont("Book Script", 20, QFont::Bold));
+                   painter.drawText(2500, 1400, "LISTE DES FORMATEURS");
+                   painter.setPen(Qt::black);
+                   painter.setFont(QFont("Time New Roman", 10));
+                   painter.drawRect(100, 100, 9200, 2700); // dimension ta3 rectangle
+                   painter.drawRect(100, 3000, 9200, 500);
+
+                   painter.drawText(300,3300,"ID_FORMATEUR");
+                   painter.drawText(2000,3300,"NOM");
+                   painter.drawText(3000,3300,"PRENOM");
+                   painter.drawText(5000,3300,"EMAIL");
+                   painter.drawText(6500,3300,"SPECIALITE");
+                   painter.drawText(8500,3300,"NTEL");
+                   QImage image("C:/Users/NOURANE/Downloads/Atelier_Connexion/logoEsprit.jpg");
+                   painter.drawImage(QRectF(200, 200, 2000, 2000), image);
+                   QImage image1("C:/Users/NOURANE/Downloads/Atelier_Connexion/RecruElite.png");
+                   painter.drawImage(QRectF(7000, 200, 2000, 2000), image1);
+                   painter.drawRect(100, 3700, 9200, 9000);
+                   QSqlQuery query;
+                   query.prepare("select * from FORMATEURS");
+                   query.exec();
+                   while (query.next())
+                   {
+                       painter.drawText(300, i, query.value(0).toString());
+                       painter.drawText(1500, i, query.value(1).toString());
+                       painter.drawText(3000, i, query.value(2).toString());
+                       painter.drawText(5000, i, query.value(3).toString());
+                       painter.drawText(6500, i, query.value(4).toString());
+                       painter.drawText(8500, i, query.value(5).toString());
+                       i = i + 350;
+                   }
+                   QMessageBox::information(this, QObject::tr("PDF Enregistré!"),
+                       QObject::tr("PDF Enregistré!.\n" "Click Cancel to exit."), QMessageBox::Cancel);
+}
+
+void MainWindow::on_pushButton_pdf_2_clicked()
+{
+    QPdfWriter pdf("C:/Users/NOURANE/Downloads/Atelier_Connexion/liste-formations.pdf");
+
+            QPainter painter(&pdf);
+                   int i = 4000;
+                   painter.setPen(Qt::black);
+                   painter.setFont(QFont("Book Script", 20, QFont::Bold));
+                   painter.drawText(2500, 1400, "LISTE DES FORMATIONS");
+                   painter.setPen(Qt::black);
+                   painter.setFont(QFont("Time New Roman", 10));
+                   painter.drawRect(100, 100, 9200, 2700); // dimension ta3 rectangle
+                   painter.drawRect(100, 3000, 9200, 500);
+
+                   painter.drawText(300,3300,"ID_FORMATION");
+                   painter.drawText(1800,3300,"TITRE");
+                   painter.drawText(3000,3300,"DATEDEBUT");
+                   painter.drawText(5000,3300,"DATEFIN");
+                   painter.drawText(7200,3300,"DUREE");
+                   painter.drawText(8500,3300,"NBRPLACE");
+                   QImage image("C:/Users/NOURANE/Downloads/Atelier_Connexion/logoEsprit.jpg");
+                   painter.drawImage(QRectF(200, 200, 2000, 2000), image);
+                   QImage image1("C:/Users/NOURANE/Downloads/Atelier_Connexion/RecruElite.png");
+                   painter.drawImage(QRectF(7000, 200, 2000, 2000), image1);
+                   painter.drawRect(100, 3700, 9200, 9000);
+                   QSqlQuery query;
+                   query.prepare("select * from FORMATIONS");
+                   query.exec();
+                   while (query.next())
+                   {
+                       painter.drawText(300, i, query.value(0).toString());
+                       painter.drawText(1500, i, query.value(1).toString());
+                       painter.drawText(3000, i, query.value(2).toString());
+                       painter.drawText(5000, i, query.value(3).toString());
+                       painter.drawText(7200, i, query.value(4).toString());
+                       painter.drawText(8500, i, query.value(5).toString());
+                       i = i + 350;
+                   }
+                   QMessageBox::information(this, QObject::tr("PDF Enregistré!"),
+                       QObject::tr("PDF Enregistré!.\n" "Click Cancel to exit."), QMessageBox::Cancel);
+}
+
+void MainWindow::on_qrcodegen_clicked()
+{
+    QString value = ui->lineEdit_qrcode->text();
+
+        QSqlQuery qry;
+        qry.prepare("SELECT * FROM FORMATEURS WHERE id_formateur = :id_formateur");
+        qry.bindValue(":id_formateur", value);
+        qry.exec();
+
+        if (qry.next()) {
+            // ID exists in the database
+            QString id_formateur = qry.value(0).toString();
+            QString nom = qry.value(1).toString();
+            QString prenom = qry.value(2).toString();
+            QString email = qry.value(3).toString();
+            QString specialite = qry.value(4).toString();
+            QString ntel = qry.value(5).toString();
+
+            QString text = "ID: " + id_formateur + "\n" + "nom: " + nom + "\n" + "prenom: " + prenom + "\n" +"email: " + email + "\n" +
+                           "specialite: " + specialite + "\n" + "ntel: " + ntel;
+
+            // Create the QR Code object
+            QrCode qr = QrCode::encodeText(text.toUtf8().data(), QrCode::Ecc::MEDIUM);
+
+            qint32 sz = qr.getSize();
+            QImage im(sz, sz, QImage::Format_RGB32);
+            QRgb black = qRgb(191, 112, 105);
+            QRgb white = qRgb(255, 255, 255);
+
+            for (int y = 0; y < sz; y++) {
+                for (int x = 0; x < sz; x++) {
+                    im.setPixel(x, y, qr.getModule(x, y) ? black : white);
+                }
+            }
+
+            ui->qrcodecommande->setPixmap(QPixmap::fromImage(im.scaled(200, 200, Qt::KeepAspectRatio, Qt::FastTransformation), Qt::MonoOnly));
+        } else {
+            // ID does not exist in the database
+            QMessageBox::critical(nullptr, QObject::tr("ID introuvable"),
+                QObject::tr("L'ID que vous avez saisi n'existe pas.\n"
+                            "Click Cancel to exit."), QMessageBox::Cancel);
+        }
+}
+
+#include "Result.h"
+#include "Operation.h"
+#include "NotificationWidget.h"
+#include "NotificationLayout.h"
+void MainWindow::on_pushButton_success_clicked()
+{
+
+    NotificationParams params;
+    params.title = "formateur a été ajoutée avec succées";
+    params.message = Operation::DoSomething(Result::RESULT_SUCCESS);
+    params.detailsButtonText = "Try again";
+    notificationLayout.AddNotificationWidget(this, params);
+}
+void MainWindow::on_pushButtonModifier_success_clicked()
+{
+
+    NotificationParams params;
+    params.title = "formateur a été modifiée avec succées";
+    params.message = Operation::DoSomething(Result::RESULT_SUCCESS);
+    params.detailsButtonText = "Try again";
+    notificationLayout.AddNotificationWidget(this, params);
+}
+void MainWindow::on_pushButtonSupprimer_success_clicked()
+{
+
+    NotificationParams params;
+    params.title = "formateur a été supprimée avec succées";
+    params.message = Operation::DoSomething(Result::RESULT_SUCCESS);
+    params.detailsButtonText = "Try again";
+    notificationLayout.AddNotificationWidget(this, params);
+}
+

@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 #include "formateurs.h"
 #include "formations.h"
+#include "NotificationLayout.h"
 
 #include <QMainWindow>
 
@@ -50,10 +51,21 @@ private slots:
 
     void on_pushButton_tri_2_clicked();
 
+    void on_pushButton_pdf_clicked();
+
+    void on_pushButton_pdf_2_clicked();
+
+    void on_qrcodegen_clicked();
+    void on_pushButton_success_clicked();
+    void on_pushButtonModifier_success_clicked();
+    void on_pushButtonSupprimer_success_clicked();
+
+
 private:
     Ui::MainWindow *ui;
     FORMATEURS F;
     FORMATIONS F1;
+    NotificationLayout notificationLayout;
 };
 
 #endif // MAINWINDOW_H
