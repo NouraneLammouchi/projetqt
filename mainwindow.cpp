@@ -34,6 +34,8 @@
 #include <QChartView>
 
 #include "QrCode.hpp"
+using namespace QtCharts;
+
 
 using namespace qrcodegen;
 
@@ -259,6 +261,10 @@ void MainWindow::on_pushButton_ajouter_2_clicked()
             QMessageBox::information(nullptr, QObject::tr("ok"),
                                      QObject::tr("Ajout effectué.\n"
                                                  "Click Cancel to exit."), QMessageBox::Cancel);
+            QFile file("C:/Users/NOURANE/Downloads/Atelier_Connexion/historique.txt");
+                        if (!file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text)) {
+                            qDebug() << "Erreur lors de l'ouverture du fichier historique.txt";
+                            return;
 
             ui->lineEdit_id_formation->clear();
             ui->lineEdit_titre->clear();
@@ -273,8 +279,15 @@ void MainWindow::on_pushButton_ajouter_2_clicked()
             ui->label_nbrplace->clear();
             ui->label_type->clear();
             ui->label_id_formateur->clear();
+            }
+             QTextStream cout(&file);
+             QString d_info = QDateTime::currentDateTime().toString();
+             QString message2 = d_info + " - Une formation a été ajoutée avec l'ID " + id_formationStr + "\n";
+             cout << message2;
 
-        } else {
+        }
+        else
+        {
             QMessageBox::critical(nullptr, QObject::tr("not ok"),
                                   QObject::tr("Ajout non effectué.\n"
                                               "Click Cancel to exit."), QMessageBox::Cancel);
@@ -286,6 +299,7 @@ void MainWindow::on_pushButton_ajouter_2_clicked()
 
 void MainWindow::on_pushButton_supprimer_2_clicked()
 {
+
     QModelIndexList selectedRows = ui->tableView_formations->selectionModel()->selectedRows();
         if (selectedRows.isEmpty()) {
             QMessageBox::warning(this, tr("Aucune ligne sélectionnée"),
@@ -296,6 +310,7 @@ void MainWindow::on_pushButton_supprimer_2_clicked()
 
 
         int id_formation = selectedRows.at(0).data().toInt();
+        QString id_formationStr = selectedRows.at(0).data().toString();
        FORMATIONS F1;
 
        bool test=F1.supprimer(id_formation);
@@ -310,6 +325,16 @@ void MainWindow::on_pushButton_supprimer_2_clicked()
          QMessageBox::critical(nullptr, QObject::tr("not ok"),
          QObject::tr("suppression non effectué.\n"
                      "Click Cancel to exit."), QMessageBox::Cancel);
+       QFile file("C:/Users/NOURANE/Downloads/Atelier_Connexion/historique.txt");
+                   if (!file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
+                   {
+                       qDebug() << "Erreur lors de l'ouverture du fichier historique.txt";
+                       return;
+                   }
+                    QTextStream cout(&file);
+                    QString d_info = QDateTime::currentDateTime().toString();
+                    QString message2 = d_info + " - Une formation a été supprimé avec l'ID " + id_formationStr + "\n";
+                    cout << message2;
 
 
 }
@@ -395,7 +420,8 @@ void MainWindow::on_pushButton_modifier_clicked()
 
 void MainWindow::on_pushButton_modifier_2_clicked()
 {
-    int id_formation=ui->lineEdit_id_formation->text().toInt();
+    QString id_formationStr=ui->lineEdit_id_formation->text();
+    int id_formation=id_formationStr.toInt();
     QString titre=ui->lineEdit_titre->text();
     QDate datedebut = ui->dateEdit_debut->date();
     QDate datefin = ui->dateEdit_fin->date();
@@ -413,6 +439,13 @@ void MainWindow::on_pushButton_modifier_2_clicked()
       QMessageBox::information(nullptr, QObject::tr("ok"),
       QObject::tr("modification effectué.\n"
                    "Click Cancel to exit."), QMessageBox::Cancel);
+      QFile file("C:/Users/NOURANE/Downloads/Atelier_Connexion/historique.txt");
+      if (!file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
+      {
+          qDebug() << "Erreur lors de l'ouverture du fichier historique.txt";
+          return;
+
+
 
      ui->lineEdit_id_formation->clear();
      ui->lineEdit_titre->clear();
@@ -420,6 +453,11 @@ void MainWindow::on_pushButton_modifier_2_clicked()
      ui->lineEdit_nbrplace->clear();
      ui->comboBox_type->setCurrentIndex(0);
      ui->lineEdit_id_formateur->clear();
+      }
+       QTextStream cout(&file);
+       QString d_info = QDateTime::currentDateTime().toString();
+       QString message2 = d_info + " - Une formation a été modifié avec l'ID " + id_formationStr + "\n";
+       cout << message2;
 
     }
 }
@@ -813,3 +851,57 @@ void MainWindow::on_pushButtonSupprimer_success_clicked()
     notificationLayout.AddNotificationWidget(this, params);
 }
 
+
+void MainWindow::on_pushButton_historique_clicked()
+{
+    QFile file("C:/Users/NOURANE/Downloads/Atelier_Connexion/historique.txt"); // Remplacez "chemin/vers/votre/fichier.txt" par le chemin de votre fichier texte
+        if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            QTextStream in(&file);
+            QString text = in.readAll();
+            file.close();
+
+            // Affichez le texte dans le QTextBrowser
+            ui->histo->setPlainText(text); // Remplacez "textBrowser" par le nom de votre QTextBrowser
+        } else {
+            qDebug() << "Impossible d'ouvrir le fichier.";
+        }
+
+}
+
+void MainWindow::on_pushButton_envoyer_clicked()
+{
+    FORMATIONS F1;
+
+        smtp* ssmtp = new smtp("nourane.lammouchi@esprit.tn", "nouranesprit", "smtp.gmail.com", 465);
+
+                connect(ssmtp, SIGNAL(status(QString)), this, SLOT(mailSent(QString)));
+
+                QString email=ui->lineEdit_adresse->text();
+
+                QString b=ui->lineEdit_sujet->text();
+
+                QString ob=ui->textEdit_message->toPlainText();
+
+                 if(email!="" && b!="" && ob!="" )
+                    {
+                                  if(F1.isValidEmail(email))
+                                  {
+                                      ssmtp->sendMail("nourane.lammouchi@esprit.tn", email , b,ob);
+                                      QMessageBox::information(nullptr, QObject::tr("EMAIL"),
+                                      QObject::tr("Email Envoyé avec succees.\n"
+                                      "click Cancel to exit"),QMessageBox::Cancel);
+                                  }
+                                  else
+                                  {
+                                      QMessageBox::critical(nullptr, QObject::tr("EMAIL"),
+                                      QObject::tr("Email is wrong in.\n"
+                                      "click Cancel to exit."),QMessageBox::Cancel);
+                                  }
+                    }
+                 else
+                    {
+                            QMessageBox::critical(nullptr, QObject::tr("EMAIL"),
+                            QObject::tr("something is empty.\n"
+                            "click Cancel to exit."),QMessageBox::Cancel);
+                    }
+}

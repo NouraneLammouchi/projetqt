@@ -189,4 +189,16 @@ FORMATIONS::FORMATIONS(int id_formation,QString titre,QDate datedebut,QDate date
        }
    }
 
+  //-------------------- checks mail validation done
+  bool FORMATIONS::isValidEmail(QString email)
+  {
+      QRegularExpression regex("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}");
+
+         // We use QRegularExpressionMatch to test if the email matches the regex pattern
+         QRegularExpressionMatch match = regex.match(email);
+
+         // If the match is valid, return true. Otherwise, return false.
+         return match.hasMatch();
+  }
+
 

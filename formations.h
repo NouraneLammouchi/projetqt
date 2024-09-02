@@ -15,6 +15,43 @@
 #include <QDateTime>
 #include <QFile>
 #include <QDebug>
+#include <QtCharts/QChart>
+#include <QtCharts/QChartView>
+#include <QtCharts/QPieSeries>
+#include <QtPrintSupport/QPrinter>
+#include <QLineSeries>
+
+//mail
+#include <QByteArray>
+#include <QDebug>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
+#include <QSslSocket>
+
+#include <QtCore/QTextStream>
+
+#include <QtNetwork/QAbstractSocket>
+#include <QtNetwork/QSslSocket>
+#include <QString>
+#include <QSqlQuery>
+#include <QtDebug>
+#include <qmessagebox.h>
+#include <QSqlQuery>
+#include <QSqlQueryModel>
+#include <algorithm>
+#include <QVariant>
+#include <QtSql>
+#include <QPdfWriter>
+#include <QPainter>
+#include <QTableWidget>
+#include <QHeaderView>
+#include <QLineEdit>
+#include <QValidator>
+#include <QRegExp>
+#include <QRegExpValidator>
+#include <QStandardItemModel>
+#include <QLabel>
 class FORMATIONS
 {
     public:
@@ -50,6 +87,7 @@ class FORMATIONS
         bool rech(QString rch);
         bool tri(QString tr);
         bool idDisponible(int );
+        bool isValidEmail(QString email);
 
 
         QSqlQueryModel *rechercher(QString);

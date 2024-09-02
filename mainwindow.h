@@ -3,7 +3,7 @@
 #include "formateurs.h"
 #include "formations.h"
 #include "NotificationLayout.h"
-
+#include "smtp.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -60,6 +60,10 @@ private slots:
     void on_pushButtonModifier_success_clicked();
     void on_pushButtonSupprimer_success_clicked();
 
+
+    void on_pushButton_historique_clicked();
+
+    void on_pushButton_envoyer_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -34,7 +34,8 @@ SOURCES += \
     formations.cpp \
         main.cpp \
         mainwindow.cpp \
-    connection.cpp
+    connection.cpp \
+    smtp.cpp
 
 HEADERS += \
     NotificationLayout.h \
@@ -45,7 +46,8 @@ HEADERS += \
     formateurs.h \
     formations.h \
         mainwindow.h \
-    connection.h
+    connection.h \
+    smtp.h
 
 FORMS += \
         mainwindow.ui
