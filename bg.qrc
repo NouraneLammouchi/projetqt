@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>gradient-blurred-abstract-background-holographic-mesh-style-vector.jpg</file>
+        <file>orange-blue-background.jpg</file>
+        <file>vivid-blurred-colorful-wallpaper-background.jpg</file>
+    </qresource>
+</RCC>

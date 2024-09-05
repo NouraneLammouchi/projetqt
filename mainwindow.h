@@ -65,6 +65,10 @@ private slots:
 
     void on_pushButton_envoyer_clicked();
 
+    void on_goToFormateur_clicked();
+
+    void on_goToFormation_clicked();
+
 private:
     Ui::MainWindow *ui;
     FORMATEURS F;

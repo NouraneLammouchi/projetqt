@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>RecruElite.png</file>
+        <file>RecruElite (1).png</file>
+        <file>RecruElite (3).png</file>
+    </qresource>
+</RCC>

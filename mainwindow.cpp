@@ -905,3 +905,14 @@ void MainWindow::on_pushButton_envoyer_clicked()
                             "click Cancel to exit."),QMessageBox::Cancel);
                     }
 }
+
+void MainWindow::on_goToFormateur_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(1);
+}
+
+void MainWindow::on_goToFormation_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+
+}
